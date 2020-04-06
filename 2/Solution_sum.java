@@ -1,5 +1,6 @@
+package com.company;
+
 import java.io.*;
-import java.math.*;
 import java.util.*;
 
 /**
@@ -13,48 +14,27 @@ import java.util.*;
  * 1000000001 1000000002 1000000003 1000000004 1000000005
  *
  * @autor Кристина Желтова, БПАЗ17-01
- * @version 1.0
+ * @version 2.0
  */
-public class Solution {
-    private static String LINE_SEPARATOR = "(\r\n|[\n\r\u2028\u2029\u0085])?";
+public class Main {
 
-    public static void main(String[] args)
-            throws IOException
-    {
-        long[] arrayToSum = getInputData();
-        long result = getArraySum(arrayToSum);
-        writeResultToFile(result);
-        openResultFile();
+    private static DataReader dataReader = new ConsoleDataReader();
+
+    public static void main(String[] args) throws IOException {
+
+        long[] arrayToSum = dataReader.getInputData();
+
+        Solver solver = new Solver();
+        solver.setArrayToSum(arrayToSum);
+        solver.computeArraySum();
+        long result = solver.getResult();
+
+        DataWriter dataWriter = new FileDataWriter(); // Запись в файл.
+        //DataWriter dataWriter = new ConsoleDataWriter(); // Запись в консоль.
+        dataWriter.writeResult(result);
         return;
     }
-
-    private static long[] getInputData() {
-        Scanner scanner = new Scanner(System.in);
-        int arCount = scanner.nextInt();
-        scanner.skip(LINE_SEPARATOR);
-
-        long[] arrayToSum = new long[arCount];
-
-        String[] inputItems = scanner.nextLine().split(" ");
-        scanner.close();
-        for (int i = 0; i < arCount; i++) {
-            arrayToSum[i] = Long.parseLong(inputItems[i]);
-        }
-        return arrayToSum;
-    }
-
-    static long getArraySum(long[] arrayToSum) {
-        return Arrays.stream(arrayToSum).sum();
-    }
-
-    private static void writeResultToFile(long result) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("out.txt"));
-        bufferedWriter.write(String.valueOf(result));
-        bufferedWriter.close();
-    }
-
-    private static void openResultFile() throws IOException {
-        Runtime runtime = Runtime.getRuntime();
-        runtime.exec("notepad out.txt");
-    }
 }
+
+
+
