@@ -2,47 +2,59 @@ import java.io.*;
 import java.math.*;
 import java.util.*;
 
+/**
+ * –î–∞–Ω–æ: n - –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —á–∏—Å–µ–ª –≤ –º–∞—Å—Å–∏–≤–µ
+ *		ar - –º–∞—Å—Å–∏–≤ —á–∏—Å–µ–ª
+ * 		1 <= n <= 10
+ *		0 <= ar[i] <= 10e10
+ *		–í—ã—á–∏—Å–ª–∏—Ç—å —Å—É–º–º—É —á–∏—Å–µ–ª.
+ * –ü—Ä–∏–º–µ—Ä:
+ * 5
+ * 1000000001 1000000002 1000000003 1000000004 1000000005
+ *
+ * @autor –ö—Ä–∏—Å—Ç–∏–Ω–∞ –ñ–µ–ª—Ç–æ–≤–∞, –ë–ü–ê–ó17-01
+ * @version 1.0
+ */
 public class Solution {
-    /*
-	* ƒ‡ÌÓ: n - ÍÓÎË˜ÂÒÚ‚Ó ˜ËÒÂÎ ‚ Ï‡ÒÒË‚Â
-	*		ar - Ï‡ÒÒË‚ ˜ËÒÂÎ
-	* 		1 <= n <= 10
-	*		0 <= ar[i] <= 10e10
-	*		¬˚˜ËÒÎËÚ¸ ÒÛÏÏÛ ˜ËÒÂÎ.
-	* œËÏÂ:
-	* 5
-	* 1000000001 1000000002 1000000003 1000000004 1000000005
-	*/
-  
-  static long aSum(long[] b) {
-   
-    }
-
-    private static final Scanner scanner = new Scanner(System.in);
+    private static String LINE_SEPARATOR = "(\r\n|[\n\r\u2028\u2029\u0085])?";
 
     public static void main(String[] args)
             throws IOException
     {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("out.txt"));
+        long[] arrayToSum = getInputData();
+        long result = getArraySum(arrayToSum);
+        writeResultToFile(result);
+        openResultFile();
+        return;
+    }
 
+    private static long[] getInputData() {
+        Scanner scanner = new Scanner(System.in);
         int arCount = scanner.nextInt();
-        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+        scanner.skip(LINE_SEPARATOR);
 
-        long[] b = new long[arCount];
+        long[] arrayToSum = new long[arCount];
 
-        String[] arItems = scanner.nextLine().split(" ");
-        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
-
-        for (int i = 0; i < arCount; i++) {
-            long arItem = Long.parseLong(arItems[i]);
-            b[i] = arItem;
-        }
-
-        long result = aSum(b);
-
-        bufferedWriter.write(String.valueOf(result));
-
-        bufferedWriter.close();
+        String[] inputItems = scanner.nextLine().split(" ");
         scanner.close();
+        for (int i = 0; i < arCount; i++) {
+            arrayToSum[i] = Long.parseLong(inputItems[i]);
+        }
+        return arrayToSum;
+    }
+
+    static long getArraySum(long[] arrayToSum) {
+        return Arrays.stream(arrayToSum).sum();
+    }
+
+    private static void writeResultToFile(long result) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("out.txt"));
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.close();
+    }
+
+    private static void openResultFile() throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        runtime.exec("notepad out.txt");
     }
 }
